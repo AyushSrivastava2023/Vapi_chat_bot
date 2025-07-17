@@ -93,7 +93,7 @@ def handle_request_for_vapi(skin_type: str, concerns: list,recommendation_type: 
             "exclusions": ["hair products"],
             "base_product": "cleanser",
             "price": 0,
-            "count": 2
+            "count": 3
         }
 
         recommendation_response = call_recommendation_api(recommendation_payload)
