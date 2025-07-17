@@ -7,8 +7,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 RECOMMENDATION_API_URL = "http://44.213.132.172:8000/api/v1/recommend"
-VTEX_API_URL = ""
-IOT_API_URL = "https://webhook.site/726792ff-5902-4227-a46d-da5f44013cc6"
+VTEX_BASE_URL = "https://app.io.vtex.com/cashmerehlc.cashmere-core-services/v0/cashmerehlc/cashdevps/_v/store/product-details"
+IOT_API_URL = "https://dev.showcase-cashmere.store/api/iot/glowProduct"
 
 
 def call_recommendation_api(payload):
