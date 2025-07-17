@@ -12,12 +12,9 @@ IOT_API_URL = "https://webhook.site/726792ff-5902-4227-a46d-da5f44013cc6"
 
 
 def call_recommendation_api(payload):
-    logger.info("Calling Recommendation API with payload: %s", payload)
     response = requests.post(RECOMMENDATION_API_URL, json=payload)
     if response.status_code != 200:
-        logger.error("Recommendation API failed with status code: %s", response.status_code)
         raise Exception(f"Recommendation API failed: {response.status_code}")
-    logger.info("Received response from Recommendation API")
     return response.json()
 
 # def fetch_product_details_from_vtex(product_ids):
@@ -33,8 +30,6 @@ def call_recommendation_api(payload):
 #     return product_data
 
 def fetch_product_details_from_vtex(product_ids, fields="basic, price"):
-    logger.info("Fetching product details from VTEX for product IDs: %s", product_ids)
-
     VTEX_BASE_URL = "https://app.io.vtex.com/cashmerehlc.cashmere-core-services/v0/cashmerehlc/cashdevps/_v/store/product-details"
     
     headers = {
@@ -63,7 +58,7 @@ def fetch_product_details_from_vtex(product_ids, fields="basic, price"):
                 default.pop("allImages", None)
 
                 product_data.append(product_json)
-                logger.info("Success for product ID: %s", pid)
+               
 
             except json.JSONDecodeError:
                 logger.warning("Invalid JSON for product ID %s", pid)
@@ -85,12 +80,11 @@ def call_iot_api(ids):
     logger.info("IoT API call successful")
     return response.json()
 
-def handle_request_for_vapi(skin_type: str, concerns: list):
+def handle_request_for_vapi(skin_type: str, concerns: list,recommendation_type: str):
     try:
-        logger.info("Handling VAPI request with skin_type: %s and concerns: %s", skin_type, concerns)
-
+       
         recommendation_payload = {
-            "recommendation_type": "skincare",
+            "recommendation_type": recommendation_type,
             "skin_type": skin_type,
             "concerns": concerns,
             "exclusions": ["hair products"],
@@ -102,12 +96,8 @@ def handle_request_for_vapi(skin_type: str, concerns: list):
         recommendation_response = call_recommendation_api(recommendation_payload)
         product_ids = recommendation_response.get("product_codes", [])
 
-        logger.info("Product IDs received: %s", product_ids)
-
         full_product_data = fetch_product_details_from_vtex(product_ids)
         iot_response = call_iot_api(product_ids)
-
-        logger.info("Request handling complete")
 
         return {
             "data": full_product_data,
