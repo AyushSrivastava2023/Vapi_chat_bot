@@ -21,10 +21,11 @@ app.add_middleware(
 class VapiRequest(BaseModel):
     skin_care: str
     concern: List[str]
+    recommendation_type: str
 
 @app.post("/api/v1/process-request", tags=["VAPI"])
 def process_vapi_input(request: VapiRequest):
-    logger.info("Vapi endpoint called")
-    response = handle_request_for_vapi(request.skin_care, request.concern)
+   
+    response = handle_request_for_vapi(request.skin_care, request.concern,request.recommendation_type)
     logger.info(f"Vapi endpoint response: {response}")
     return response
