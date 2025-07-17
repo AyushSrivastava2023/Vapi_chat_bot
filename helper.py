@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 RECOMMENDATION_API_URL = "http://44.213.132.172:8000/api/v1/recommend"
-VTEX_API_URL = "https://webhook.site/f1ad94eb-92d3-45e1-82b5-226fd68cdde4"
+VTEX_API_URL = ""
 IOT_API_URL = "https://webhook.site/726792ff-5902-4227-a46d-da5f44013cc6"
 
 
@@ -69,11 +69,14 @@ def fetch_product_details_from_vtex(product_ids, fields="basic, price"):
 
 def call_iot_api(ids):
     payload = {
-        "iot_tracking_ids": ids,
-        "event": "recommendation_sent"
+        "product_codes": ids,
+    }
+    params = {
+        "status": "on"
     }
     logger.info("Calling IoT API with payload: %s", payload)
-    response = requests.post(IOT_API_URL, json=payload)
+    response = requests.post(IOT_API_URL, params=params,json=payload)
+
     if response.status_code != 200:
         logger.error("IoT API failed with status code: %s", response.status_code)
         raise Exception(f"IoT API failed: {response.status_code}")
