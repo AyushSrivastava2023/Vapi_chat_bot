@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 RECOMMENDATION_API_URL = "http://44.213.132.172:8000/api/v1/recommend"
 VTEX_API_URL = "https://webhook.site/f1ad94eb-92d3-45e1-82b5-226fd68cdde4"
-IOT_API_URL = "https://webhook.site/ce0c97ac-e18e-45f6-bc39-9d1ac7282663"
+IOT_API_URL = "https://webhook.site/726792ff-5902-4227-a46d-da5f44013cc6"
 
 def call_recommendation_api(payload):
     logger.info("Calling Recommendation API with payload: %s", payload)
