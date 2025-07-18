@@ -46,7 +46,7 @@ from pydantic import BaseModel
 class OptionsRequest(BaseModel):
     type: Literal["concern", "skintype"]
 
-@app.post("/options", response_model=List[str])
+@app.post("/options",)
 async def get_options(request: OptionsRequest):
     """
     Returns a list of skincare concerns or skin types based on the body param.
@@ -59,7 +59,7 @@ async def get_options(request: OptionsRequest):
  
     if request.type == "concern":
         logger.info("Returning concerns list.")
-        return concerns
+        return {"options": concerns}
     else:
         logger.info("Returning skin types list.")
-        return skin_types
+        return {"options": skin_types}
