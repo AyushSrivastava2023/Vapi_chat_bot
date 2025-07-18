@@ -32,7 +32,7 @@ def process_vapi_input(request: VapiRequest):
     return response
 
 
-# Data
+# # Data
 concerns = sorted(set([
     "Dryness", "Dullness", "Dehydration", "Sensitivity", "Redness", "Excess Oil"
 ]))
@@ -41,17 +41,23 @@ skin_types = [
     "All Skin Types", "Combination", "Oily", "Normal", "Dry Skin", "Sensitive Skin"
 ]
  
-@app.get("/options", response_model=List[str])
-async def get_options(
-    type: Literal["concern", "skintype"] = Query(..., description="Specify 'concern' or 'skintype'")
-):
+from pydantic import BaseModel
+
+class OptionsRequest(BaseModel):
+    type: Literal["concern", "skintype"]
+
+@app.post("/options", response_model=List[str])
+async def get_options(request: OptionsRequest):
     """
-    Returns a list of skincare concerns or skin types based on the query param.
-    Example: /options?type=concern or /options?type=skintype
+    Returns a list of skincare concerns or skin types based on the body param.
+    Example body:
+    {
+      "type": "concern"
+    }
     """
-    logger.info(f"Request received for type: {type}")
+    logger.info(f"Request received for type: {request.type}")
  
-    if type == "concern":
+    if request.type == "concern":
         logger.info("Returning concerns list.")
         return concerns
     else:
