@@ -19,7 +19,6 @@ def call_recommendation_api(payload):
 
 def fetch_product_details_from_vtex(product_ids, fields="basic"):
     VTEX_BASE_URL = "https://dev.showcase-cashmere.store/api/ccs/product-details"
-
     logger.info("Fetching product details from VTEX for product IDs: %s", product_ids)
     def try_fetch(pid):
         params = {
@@ -33,10 +32,8 @@ def fetch_product_details_from_vtex(product_ids, fields="basic"):
             if response.status_code == 200:
                 product_json = response.json()
                 product = product_json.get("data", {}).get("product", {})
-                default = product.get("basic", {}).get("default", {})
-                default.pop("images", None)
-                default.pop("allImages", None)
-                return product_json
+                product_id = product.get("basic", {}).get("productId")
+                return product_id     
             else:
                 logger.warning("VTEX API failed for ID %s with status %s", pid, response.status_code)
         except Exception as e:
