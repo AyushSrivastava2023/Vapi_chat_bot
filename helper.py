@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 RECOMMENDATION_API_URL = "http://44.213.132.172:8000/api/v1/recommend"
-VTEX_BASE_URL = "https://app.io.vtex.com/cashmerehlc.cashmere-core-services/v0/cashmerehlc/cashdevps/_v/store/product-details"
+VTEX_BASE_URL = "https://dev.showcase-cashmere.store/api/ccs/product-details"
 IOT_API_URL = "https://dev.showcase-cashmere.store/api/iot/glowProduct"
 
 
@@ -18,8 +18,6 @@ def call_recommendation_api(payload):
     return response.json()
 
 def fetch_product_details_from_vtex(product_ids, fields="basic"):
-    VTEX_BASE_URL = "https://dev.showcase-cashmere.store/api/ccs/product-details"
-
     logger.info("Fetching product details from VTEX for product IDs: %s", product_ids)
     def try_fetch(pid):
         params = {
