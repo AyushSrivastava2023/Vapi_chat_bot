@@ -31,14 +31,13 @@ def process_vapi_input(request: VapiRequest):
     logger.info(f"Vapi endpoint response: {response}")
     return response
 
-
 # # Data
 concerns = sorted(set([
-    "Dryness", "Dullness", "Dehydration", "Sensitivity", "Redness", "Excess Oil"
+    "Dryness", "Dullness", "Dehydration", "Sensitivity", "Redness", "Excess Oil","Congestion","Pollution","fatigue"
 ]))
  
 skin_types = [
-    "All Skin Types", "Combination", "Oily", "Normal", "Dry Skin", "Sensitive Skin"
+    "All Skin Types", "Combination", "Oily", "Normal", "Dry Skin", "Sensitive Skin","Dull","Depleted","Mature"
 ]
  
 from pydantic import BaseModel
