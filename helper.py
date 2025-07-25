@@ -33,7 +33,6 @@ def fetch_product_details_from_vtex(product_ids, fields="basic"):
                 basic = product_json.get("data", {}).get("product", {}).get("basic", {})
 
                 default = basic.get("default", {})
-                default.pop("images", None)
                 default.pop("allImages", None)
                 default.pop("sellerId", None)
                 default.pop("listPrice", None)
